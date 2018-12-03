@@ -35,7 +35,9 @@ class FibonacciNode {
     }
 
     public void setChild(FibonacciNode child) {
+
         this.child = child;
+        this.setDegree(child.getDegree() + 1);
     }
 
     public FibonacciNode getLeft() {
