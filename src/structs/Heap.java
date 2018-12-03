@@ -105,6 +105,10 @@ public class Heap {
         return this.heapArray.isEmpty();
     }
 
+    public int size() {
+        return this.heapArray.size();
+    }
+
     public void print() {
         for (GraphWay d : this.heapArray) {
             System.out.print(d.getWeight());

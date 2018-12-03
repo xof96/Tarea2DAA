@@ -141,10 +141,10 @@ class FibonacciHeap {
     public void decreaseKey(FibonacciNode node, double value) {
         if (value < node.getKey()) {
             node.setKey(value);
-            FibonacciNode par =  node.getP();
+            FibonacciNode par = node.getP();
             if (par != null && node.getKey() < par.getKey()) {
                 this.cut(node, par);
-//                this.cascadingCut(par);
+                this.cascadingCut(par);
             }
 
             if (node.getKey() < this.getMin().getKey()) {
@@ -157,11 +157,40 @@ class FibonacciHeap {
         if (node.isPointed()) {
             if (node.getRight() == node) {
                 par.setChild(null);
-                // TODO
+            } else {
+                par.setChild(node.getRight());
             }
-            par.setChild(node.getRight());
+            node.setPointed(false);
         }
+        if (par.getDegree() == node.getDegree() + 1) {
+            par.setDegree(par.getChild().getDegree() + 1);
+            FibonacciNode currNode = par.getChild().getRight();
+            while (!currNode.isPointed()) {
+                if (currNode.getDegree() > par.getDegree() - 1) {
+                    par.setDegree(currNode.getDegree() + 1);
+                }
+            }
+        }
+        this.insert(node);
         node.setP(null);
+        node.setMark(false);
+    }
+
+    private void cascadingCut(FibonacciNode par) {
+        FibonacciNode z = par.getP();
+        if (z != null) {
+            if (!par.hasMark()) {
+                par.setMark(true);
+            } else {
+                this.cut(par, z);
+                this.cascadingCut(z);
+            }
+        }
+    }
+
+    public FibonacciNode delete(FibonacciNode x) {
+        this.decreaseKey(x, Double.NEGATIVE_INFINITY);
+        return this.extractMin();
     }
 
     public int getN() {
