@@ -144,7 +144,7 @@ class FibonacciHeap {
             FibonacciNode par =  node.getP();
             if (par != null && node.getKey() < par.getKey()) {
                 this.cut(node, par);
-                this.cascadingCut(par);
+//                this.cascadingCut(par);
             }
 
             if (node.getKey() < this.getMin().getKey()) {
@@ -157,7 +157,7 @@ class FibonacciHeap {
         if (node.isPointed()) {
             if (node.getRight() == node) {
                 par.setChild(null);
-                TODO
+                // TODO
             }
             par.setChild(node.getRight());
         }
