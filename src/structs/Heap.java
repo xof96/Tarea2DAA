@@ -101,6 +101,10 @@ public class Heap {
         }
     }
 
+    public boolean isEmpty() {
+        return this.heapArray.isEmpty();
+    }
+
     public void print() {
         for (Double d : this.heapArray) {
             System.out.print(d);
