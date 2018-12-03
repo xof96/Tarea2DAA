@@ -16,8 +16,9 @@ public class HeapTest {
         h.insert(5);
         h.insert(91);
         h.extractMin();
-        h.print();
         h.extractMin();
+        h.print();
+        h.decreaseKey(4, 10);
         h.print();
     }
 }
