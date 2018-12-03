@@ -1,8 +1,10 @@
 package experiments;
 
+import javafx.util.Pair;
+
 public class DijkArr {
 
-    public int[] makeDijsktra(double[][] graph){
+    public Pair makeDijsktra(double[][] graph){
         int MAX_INT=10000000;//cambiarlo
         int n=graph.length;
         double[] dist=new double[n];
@@ -34,6 +36,6 @@ public class DijkArr {
                 }
             }
         }
-        return prev;
+        return new Pair(prev,dist);
     }
 }

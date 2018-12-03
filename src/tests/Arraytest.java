@@ -1,6 +1,7 @@
 package tests;
 import structs.Graph;
 import experiments.DijkArr;
+import experiments.DijkHeap;
 
 public class Arraytest {
     public static void main(String args[]){
@@ -13,9 +14,14 @@ public class Arraytest {
             }
             System.out.println("\n");
         }
-        int[] caminoMin=dijkstra.makeDijsktra(mat);
+        int[] caminoMin=(int[]) dijkstra.makeDijsktra(mat).getKey();
         for (int i=0;i<caminoMin.length;i++){
             System.out.print(caminoMin[i]+" ");
+        }
+        DijkHeap dijh=new DijkHeap();
+        int[] caminoMinH=(int []) dijh.dijsktra(mat,0).getKey();
+        for (int i=0;i<caminoMin.length;i++){
+            System.out.print(caminoMinH[i]+" ");
         }
     }
 }
