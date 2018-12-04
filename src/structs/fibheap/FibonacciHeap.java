@@ -61,23 +61,27 @@ public class FibonacciHeap {
     public FibonacciNode extractMin() {
         FibonacciNode res = this.getMin();
         if (res != null) {
-            FibonacciNode currChild = res.getChild().getRight();
-            FibonacciNode receivingNode = this.getMin();
-            while (true) {
-                FibonacciNode nextNode = currChild.getRight();
-                currChild.setLeft(receivingNode);
-                currChild.setRight(receivingNode.getRight());
-                receivingNode.setRight(currChild);
-                currChild.getRight().setLeft(currChild);
-                currChild.setP(null);
-                if (currChild.isPointed()) {
-                    currChild.setPointed(false);
-                    break;
+            FibonacciNode child = res.getChild();
+            if (child != null) {
+                FibonacciNode currChild = res.getChild().getRight();
+                FibonacciNode receivingNode = this.getMin();
+                while (true) {
+                    FibonacciNode nextNode = currChild.getRight();
+                    currChild.setLeft(receivingNode);
+                    currChild.setRight(receivingNode.getRight());
+                    receivingNode.setRight(currChild);
+                    currChild.getRight().setLeft(currChild);
+                    currChild.setP(null);
+                    if (currChild.isPointed()) {
+                        currChild.setPointed(false);
+                        break;
+                    }
+                    currChild = nextNode;
                 }
-                currChild = nextNode;
             }
             res.getRight().setLeft(res.getLeft());
             res.getLeft().setRight(res.getRight());
+            res.setPointed(false);
             if (res.getRight() == res) {
                 this.setMin(null);
             } else {
@@ -133,6 +137,11 @@ public class FibonacciHeap {
     private void link(FibonacciNode y, FibonacciNode x) {
         y.getRight().setLeft(y.getLeft());
         y.getLeft().setRight(y.getRight());
+
+        if (y.isPointed()) {
+            x.setPointed(true);
+        }
+
         if (x.getChild() == null) {
             y.setRight(y);
             y.setLeft(y);
@@ -233,7 +242,7 @@ public class FibonacciHeap {
         if (this.min == null) {
             System.out.println("El árbol está vacío");
         } else {
-            this.min.print();
+            this.min.print(0);
         }
     }
 }

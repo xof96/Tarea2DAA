@@ -37,8 +37,10 @@ public class FibonacciNode {
     }
 
     public void setChild(FibonacciNode child) {
-
+        if (this.child != null)
+            this.child.setPointed(false);
         this.child = child;
+        child.setPointed(true);
         this.setDegree(child.getDegree() + 1);
     }
 
@@ -94,14 +96,15 @@ public class FibonacciNode {
         return this.getKey().toString();
     }
 
-    public void print() {
+    public void print(int tabs) {
         FibonacciNode currNode = this.getRight();
         while (true) {
-            System.out.print(currNode);
+            for (int i = 0; i < tabs; i++)
+                System.out.print("\t");
+            System.out.println(String.format("|%s|; ", currNode));
             FibonacciNode child = currNode.getChild();
             if (child != null) {
-                System.out.println(String.format("Estos son los hijos de %s", currNode.toString()));
-                child.print();
+                child.print(tabs + 1);
             }
             if (currNode.isPointed())
                 break;

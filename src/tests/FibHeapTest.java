@@ -17,5 +17,8 @@ public class FibHeapTest {
         h.insert(new FibonacciNode(new GraphWay(7, 5)));
         h.insert(new FibonacciNode(new GraphWay(8, 91)));
         h.print();
+        System.out.println("________________________________________\n\n");
+        h.extractMin();
+        h.print();
     }
 }
