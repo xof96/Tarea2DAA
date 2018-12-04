@@ -1,8 +1,8 @@
 package experiments;
 
 import javafx.util.Pair;
-import structs.Heap;
 import structs.GraphWay;
+import structs.Heap;
 
 public class DijkHeap {
 
