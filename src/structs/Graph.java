@@ -16,7 +16,7 @@ public class Graph {
         //Se garantiza conectividad
         for (int i = 0; i < n - 1; i++) {
             mat[i][i + 1] = rand.nextDouble();
-            mat[i+1][i]=mat[i][i+1];
+            mat[i + 1][i] = mat[i][i + 1];
         }
         int e = n * x;
         int aristas = n - 1;

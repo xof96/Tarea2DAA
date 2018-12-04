@@ -144,7 +144,7 @@ public class Heap {
     }
 
     public void printGraphPos() {
-        for (Integer i: this.graphNodes) {
+        for (Integer i : this.graphNodes) {
             System.out.print(i);
             System.out.print(" ");
         }
