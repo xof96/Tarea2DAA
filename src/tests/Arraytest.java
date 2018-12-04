@@ -1,5 +1,6 @@
 package tests;
 
+import experiments.DijkFib;
 import structs.Graph;
 import experiments.DijkArr;
 import experiments.DijkHeap;
@@ -35,5 +36,9 @@ public class Arraytest {
         for (int i = 0; i < caminoMin.length; i++) {
             System.out.print(distMinH[i] + " ");
         }
+        DijkFib dijf=new DijkFib();
+        int[] caminoMinF = (int[]) dijf.dijsktra(mat, 0).getKey();
+        double[] distMinF = (double[]) dijf.dijsktra(mat, 0).getValue();
+
     }
 }

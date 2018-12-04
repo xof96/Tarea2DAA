@@ -1,14 +1,14 @@
 package structs.fibheap;
 
-class FibonacciHeap {
+public class FibonacciHeap {
     private int n;
     private FibonacciNode min;
     private FibonacciNode[] graphNodes;
 
-    public FibonacciHeap(FibonacciNode[] graphNodes) {
+    public FibonacciHeap(int nodos) {
         this.n = 0;
         this.min = null;
-        this.graphNodes = graphNodes;
+        this.graphNodes = new FibonacciNode[nodos];
     }
 
 

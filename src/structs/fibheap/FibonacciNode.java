@@ -2,7 +2,7 @@ package structs.fibheap;
 
 import structs.GraphWay;
 
-class FibonacciNode {
+public class FibonacciNode {
     private FibonacciNode p;
     private FibonacciNode child;
     private FibonacciNode left;
