@@ -1,16 +1,18 @@
 package structs.fibheap;
 
+import structs.GraphWay;
+
 class FibonacciNode {
     private FibonacciNode p;
     private FibonacciNode child;
     private FibonacciNode left;
     private FibonacciNode right;
     private int degree;
-    private double key;
+    private GraphWay key;
     private boolean mark;
     private boolean isPointed;
 
-    public FibonacciNode(double key) {
+    public FibonacciNode(GraphWay key) {
         this.p = null;
         this.child = null;
         this.left = this;
@@ -64,11 +66,11 @@ class FibonacciNode {
         this.degree = degree;
     }
 
-    public double getKey() {
+    public GraphWay getKey() {
         return key;
     }
 
-    public void setKey(double key) {
+    public void setKey(GraphWay key) {
         this.key = key;
     }
 
