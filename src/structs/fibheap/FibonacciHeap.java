@@ -15,12 +15,14 @@ class FibonacciHeap {
     public void insert(FibonacciNode x) {
         if (this.min == null) {
             this.setMin(x);
+            this.graphNodes[x.getKey().getNode()]=x;
         } else {
             FibonacciNode min = this.getMin();
             x.setLeft(min);
             x.setRight(min.getRight());
             min.getRight().setLeft(x);
             min.setRight(x);
+            this.graphNodes[x.getKey().getNode()]=x;
             if (x.getKey().getWeight() < min.getKey().getWeight()) {
                 min.setPointed(false);
                 this.setMin(x);
