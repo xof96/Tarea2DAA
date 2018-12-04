@@ -2,7 +2,7 @@ package structs.fibheap;
 
 import structs.GraphWay;
 
-class FibonacciNode {
+public class FibonacciNode {
     private FibonacciNode p;
     private FibonacciNode child;
     private FibonacciNode left;
@@ -88,5 +88,24 @@ class FibonacciNode {
 
     public void setPointed(boolean pointed) {
         this.isPointed = pointed;
+    }
+
+    public String toString() {
+        return this.getKey().toString();
+    }
+
+    public void print() {
+        FibonacciNode currNode = this.getRight();
+        while (true) {
+            System.out.print(currNode);
+            FibonacciNode child = currNode.getChild();
+            if (child != null) {
+                System.out.println(String.format("Estos son los hijos de %s", currNode.toString()));
+                child.print();
+            }
+            if (currNode.isPointed())
+                break;
+            currNode = currNode.getRight();
+        }
     }
 }

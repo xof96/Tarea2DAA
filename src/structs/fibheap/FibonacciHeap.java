@@ -1,14 +1,14 @@
 package structs.fibheap;
 
-class FibonacciHeap {
+public class FibonacciHeap {
     private int n;
     private FibonacciNode min;
     private FibonacciNode[] graphNodes;
 
-    public FibonacciHeap(FibonacciNode[] graphNodes) {
+    public FibonacciHeap(int n) {
         this.n = 0;
         this.min = null;
-        this.graphNodes = graphNodes;
+        this.graphNodes = new FibonacciNode[n];
     }
 
 
@@ -223,5 +223,17 @@ class FibonacciHeap {
         this.min = min;
         if (min != null)
             min.setPointed(true);
+    }
+
+    public boolean isEmpty() {
+        return this.n == 0;
+    }
+
+    public void print() {
+        if (this.min == null) {
+            System.out.println("El árbol está vacío");
+        } else {
+            this.min.print();
+        }
     }
 }
