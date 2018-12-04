@@ -40,8 +40,10 @@ public class FibonacciNode {
         if (this.child != null)
             this.child.setPointed(false);
         this.child = child;
-        child.setPointed(true);
-        this.setDegree(child.getDegree() + 1);
+        if (child != null) {
+            child.setPointed(true);
+            this.setDegree(child.getDegree() + 1);
+        }
     }
 
     public FibonacciNode getLeft() {

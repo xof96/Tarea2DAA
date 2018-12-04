@@ -36,9 +36,14 @@ public class Arraytest {
         for (int i = 0; i < caminoMin.length; i++) {
             System.out.print(distMinH[i] + " ");
         }
+        System.out.println();
         DijkFib dijf=new DijkFib();
         int[] caminoMinF = (int[]) dijf.dijsktra(mat, 0).getKey();
         double[] distMinF = (double[]) dijf.dijsktra(mat, 0).getValue();
+        for (int i = 0; i < caminoMinF.length; i++) {
+            System.out.print(caminoMinF[i] + " ");
+        }
+        System.out.println();
         for (int i = 0; i < caminoMinF.length; i++) {
             System.out.print(distMinF[i] + " ");
         }

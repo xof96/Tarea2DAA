@@ -20,11 +20,13 @@ public class DijkFib {
                 dist[v] = MAX_INT;
             }
             GraphWay nodo = new GraphWay(v, dist[v]);
-            FibonacciNode x=new FibonacciNode(nodo);
+            FibonacciNode x = new FibonacciNode(nodo);
             Q.insert(x);
         }
-        while (Q.getN()!=0) {
-            int m = Q.extractMin().getKey().getNode();
+
+        while (!Q.isEmpty()) {
+            FibonacciNode p = Q.extractMin();
+            int m = p.getKey().getNode();
             for (int v = 0; v < n; v++) {
                 if (graph[m][v] > 0) {//se seleccionan los vecinos
                     double nuevaDist = dist[m] + graph[m][v];
