@@ -29,7 +29,7 @@ public class Arraytest {
         DijkHeap dijh = new DijkHeap();
         int[] caminoMinH = (int[]) dijh.dijsktra(mat, 0).getKey();
         double[] distMinH = (double[]) dijh.dijsktra(mat, 0).getValue();
-        for (int i = 0; i < caminoMin.length; i++) {
+        for (int i = 0; i < caminoMinH.length; i++) {
             System.out.print(caminoMinH[i] + " ");
         }
         System.out.println();
@@ -39,6 +39,9 @@ public class Arraytest {
         DijkFib dijf=new DijkFib();
         int[] caminoMinF = (int[]) dijf.dijsktra(mat, 0).getKey();
         double[] distMinF = (double[]) dijf.dijsktra(mat, 0).getValue();
+        for (int i = 0; i < caminoMinF.length; i++) {
+            System.out.print(distMinF[i] + " ");
+        }
 
     }
 }
