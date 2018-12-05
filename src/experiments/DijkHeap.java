@@ -4,9 +4,11 @@ import javafx.util.Pair;
 import structs.GraphWay;
 import structs.Heap;
 
+import java.util.ArrayList;
+
 public class DijkHeap {
 
-    public Pair dijsktra(double[][] graph, int origen) {
+    public Pair dijsktra(ArrayList<GraphWay>[] graph, int origen) {
         int n = graph.length;
         Heap Q = new Heap(n);
         int MAX_INT = 10000000;//cambiarlo
@@ -23,14 +25,12 @@ public class DijkHeap {
         }
         while (!Q.isEmpty()) {
             int m = Q.extractMin().getNode();
-            for (int v = 0; v < n; v++) {
-                if (graph[m][v] > 0) {//se seleccionan los vecinos
-                    double nuevaDist = dist[m] + graph[m][v];
-                    if (nuevaDist < dist[v]) {
-                        dist[v] = nuevaDist;
-                        prev[v] = m;
-                        Q.decreaseKey(v, nuevaDist);
-                    }
+            for (int v = 0; v < graph[m].size(); v++) {
+                double nuevaDist = dist[m] + graph[m].get(v).getWeight();
+                if (nuevaDist < dist[graph[m].get(v).getNode()]) {
+                    dist[graph[m].get(v).getNode()] = nuevaDist;
+                    prev[graph[m].get(v).getNode()] = m;
+                    Q.decreaseKey(graph[m].get(v).getNode(), nuevaDist);
                 }
             }
         }

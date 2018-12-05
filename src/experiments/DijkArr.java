@@ -1,10 +1,13 @@
 package experiments;
 
 import javafx.util.Pair;
+import structs.GraphWay;
+
+import java.util.ArrayList;
 
 public class DijkArr {
 
-    public Pair makeDijsktra(double[][] graph) {
+    public Pair makeDijsktra(ArrayList<GraphWay>[] graph) {
         int MAX_INT = 10000000;//cambiarlo
         int n = graph.length;
         double[] dist = new double[n];
@@ -27,13 +30,12 @@ public class DijkArr {
             }
             int u = minNodo;
             marcado[u] = true;
-            for (int v = 0; v < n; v++) {
-                if (graph[u][v] != 0) {
-                    if (dist[v] > dist[u] + graph[u][v]) {
-                        dist[v] = dist[u] + graph[u][v];
-                        prev[v] = u;
-                    }
+            for (int v = 0; v < graph[u].size(); v++) {
+                if (dist[graph[u].get(v).getNode()] > dist[u] + graph[u].get(v).getWeight()) {
+                    dist[graph[u].get(v).getNode()] = dist[u] + graph[u].get(v).getWeight();
+                    prev[graph[u].get(v).getNode()] = u;
                 }
+
             }
         }
         return new Pair(prev, dist);

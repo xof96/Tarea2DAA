@@ -4,7 +4,10 @@ import experiments.DijkArr;
 import experiments.DijkHeap;
 import javafx.util.Pair;
 import structs.Graph;
+import structs.GraphWay;
+
 import java.lang.System;
+import java.util.ArrayList;
 
 public class FinalTest {
 
@@ -13,7 +16,7 @@ public class FinalTest {
         double[] tiempoheap=new double[100];
         for (int veces=0;veces<100;veces++) {
             Graph graph = new Graph();
-            double[][] mat = graph.generateGraph(10000, 100);//ajustar parametros para la ram de cada uno
+            ArrayList<GraphWay>[] mat = graph.generateGraph(10000, 100);//ajustar parametros para la ram de cada uno
             DijkArr dijkstra = new DijkArr();
             double ini = System.currentTimeMillis();
             Pair cdarray = dijkstra.makeDijsktra(mat);

@@ -1,22 +1,28 @@
 package structs;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Graph {
 
-    public double[][] generateGraph(int n, int x) {
+    public ArrayList<GraphWay>[] generateGraph(int n, int x) {
         Random rand = new Random();
-        double[][] mat = new double[n][n];
+        int[][] mat = new int[n][n];
         //Se inicializa la matriz con puros 0
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 mat[i][j] = 0;
             }
         }
+        ArrayList<GraphWay>[] graph=new ArrayList[n];
+        for (int i=0;i<n;i++){
+            graph[i]=new ArrayList<GraphWay>();
+        }
         //Se garantiza conectividad
         for (int i = 0; i < n - 1; i++) {
-            mat[i][i + 1] = rand.nextDouble();
-            mat[i + 1][i] = mat[i][i + 1];
+            graph[i].add(new GraphWay(i+1,rand.nextDouble()));
+            mat[i][i + 1] = 1;
+            mat[i + 1][i] = 1;
         }
         int e = n * x;
         int aristas = n - 1;
@@ -28,10 +34,11 @@ public class Graph {
                 a = rand.nextInt(n);
                 b = rand.nextInt(n);
             }
-            mat[a][b] = rand.nextDouble();
-            mat[b][a] = mat[a][b];
+            graph[a].add(new GraphWay(b,rand.nextDouble()));
+            mat[a][b] = 1;
+            mat[b][a] = 1;
             aristas++;
         }
-        return mat;
+        return graph;
     }
 }
