@@ -64,6 +64,8 @@ public class FibonacciHeap {
             if (res.getRight() == res)
                 System.out.println();
             FibonacciNode child = res.getChild();
+            if (child == null)
+                System.out.println();
             if (child != null) {
                 FibonacciNode currChild = res.getChild().getRight();
                 FibonacciNode receivingNode = this.getMin();
@@ -92,6 +94,8 @@ public class FibonacciHeap {
                 this.setMin(null);
             } else {
                 this.setMin(res.getRight());
+                res.setRight(res);
+                res.setLeft(res);
                 this.consolidate();
             }
             this.n--;
@@ -145,17 +149,14 @@ public class FibonacciHeap {
     private void link(FibonacciNode y, FibonacciNode x) {
         y.getRight().setLeft(y.getLeft());
         y.getLeft().setRight(y.getRight());
+        y.setRight(y);
+        y.setLeft(y);
 
         if (y.isPointed()) {
             x.setPointed(true);
         }
 
-        if (x.getChild() == null) {
-            y.setRight(y);
-            y.setLeft(y);
-            y.setPointed(true);
-        } else {
-            y.setPointed(false);
+        if (x.getChild() != null) {
             FibonacciNode currNode = x.getChild();
             FibonacciNode currNodeL = x.getChild().getLeft();
             currNodeL.setRight(y);
@@ -163,6 +164,7 @@ public class FibonacciHeap {
             y.setRight(currNode);
             y.setLeft(currNodeL);
         }
+
         y.setP(x);
         x.setChild(y);
         x.setDegree(y.getDegree() + 1);
