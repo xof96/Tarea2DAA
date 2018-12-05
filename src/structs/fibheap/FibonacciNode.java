@@ -42,7 +42,7 @@ public class FibonacciNode {
         this.child = child;
         if (child != null) {
             child.setPointed(true);
-            this.setDegree(child.getDegree() + 1);
+//            this.setDegree(child.getDegree() + 1); //RARO - REVISAR
         } else {
             this.setDegree(0);
         }

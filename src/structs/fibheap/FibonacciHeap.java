@@ -165,6 +165,7 @@ public class FibonacciHeap {
         }
         y.setP(x);
         x.setChild(y);
+        x.setDegree(y.getDegree() + 1);
         y.setMark(false);
     }
 
@@ -189,6 +190,8 @@ public class FibonacciHeap {
                 par.setChild(null);
             } else {
                 par.setChild(node.getRight());
+                node.getRight().setLeft(node.getLeft());
+                node.getLeft().setRight(node.getRight());
             }
             node.setPointed(false);
         }
