@@ -27,7 +27,7 @@ public class DijkFib {
         }
         while (Q.getN() != 0) {
             int m = Q.extractMin().getKey().getNode();
-            for (int v = 0; v < n; v++) {
+            for (int v = 0; v < graph[m].size(); v++) {
                 double nuevaDist = dist[m] + graph[m].get(v).getWeight();
                 if (nuevaDist < dist[graph[m].get(v).getNode()]) {
                     dist[graph[m].get(v).getNode()] = nuevaDist;
