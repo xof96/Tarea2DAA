@@ -23,7 +23,7 @@ public class Arraytest {
         }
         for (int i=0;i<5;i++){
             for (int j=0;j<5;j++){
-                printmat[j][i]=printmat[i][j];
+                //printmat[j][i]=printmat[i][j];
                 System.out.print(printmat[i][j]+" ");
             }
             System.out.println();
