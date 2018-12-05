@@ -25,17 +25,30 @@ public class DijkFib {
             FibonacciNode x = new FibonacciNode(nodo);
             Q.insert(x);
         }
-        while (Q.getN() != 0) {
-            int m = Q.extractMin().getKey().getNode();
-            for (int v = 0; v < graph[m].size(); v++) {
-                double nuevaDist = dist[m] + graph[m].get(v).getWeight();
-                if (nuevaDist < dist[graph[m].get(v).getNode()]) {
-                    dist[graph[m].get(v).getNode()] = nuevaDist;
-                    prev[graph[m].get(v).getNode()] = m;
-                    Q.decreaseKey(graph[m].get(v).getNode(), nuevaDist);
-                }
 
+        try {
+            while (Q.getN() != 0) {
+                System.out.println(String.format("Voy a extraer el mínimo = %s, cuando me quedan %d nodos", Q.getMin(), Q.getN()));
+                FibonacciNode min = Q.extractMin();
+                if (min == null) {
+                    Q.print();
+                }
+                int m = min.getKey().getNode();
+                System.out.println(String.format("Ya extraje el mínimo y me quedaron %d nodos", Q.getN()));
+                for (int v = 0; v < graph[m].size(); v++) {
+                    double nuevaDist = dist[m] + graph[m].get(v).getWeight();
+                    if (nuevaDist < dist[graph[m].get(v).getNode()]) {
+                        dist[graph[m].get(v).getNode()] = nuevaDist;
+                        prev[graph[m].get(v).getNode()] = m;
+                        System.out.println(String.format("Min antes del decrease: %s", Q.getMin()));
+                        Q.decreaseKey(graph[m].get(v).getNode(), nuevaDist);
+                        System.out.println(String.format("Min después del decrease: %s", Q.getMin()));
+                    }
+                }
             }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Q.print();
         }
         return new Pair(prev, dist);
     }
