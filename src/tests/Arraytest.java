@@ -14,7 +14,7 @@ public class Arraytest {
         DijkArr dijkstra = new DijkArr();
         ArrayList<GraphWay>[] mat = generador.generateGraph(5, 2);
         int[] caminoMin = (int[]) dijkstra.makeDijsktra(mat).getKey();
-        double[] distMin=(double[]) dijkstra.makeDijsktra(mat).getValue();
+        double[] distMin = (double[]) dijkstra.makeDijsktra(mat).getValue();
         for (int i = 0; i < caminoMin.length; i++) {
             System.out.print(caminoMin[i] + " ");
         }
@@ -33,12 +33,17 @@ public class Arraytest {
         for (int i = 0; i < caminoMin.length; i++) {
             System.out.print(distMinH[i] + " ");
         }
-        /*DijkFib dijf=new DijkFib();
+        System.out.println();
+        DijkFib dijf = new DijkFib();
         int[] caminoMinF = (int[]) dijf.dijsktra(mat, 0).getKey();
         double[] distMinF = (double[]) dijf.dijsktra(mat, 0).getValue();
         for (int i = 0; i < caminoMinF.length; i++) {
+            System.out.print(caminoMinH[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < caminoMinF.length; i++) {
             System.out.print(distMinF[i] + " ");
-        }*/
+        }
 
     }
 }

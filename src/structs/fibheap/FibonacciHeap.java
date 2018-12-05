@@ -61,6 +61,8 @@ public class FibonacciHeap {
     public FibonacciNode extractMin() {
         FibonacciNode res = this.getMin();
         if (res != null) {
+            if (res.getRight() == res)
+                System.out.println();
             FibonacciNode child = res.getChild();
             if (child != null) {
                 FibonacciNode currChild = res.getChild().getRight();
@@ -82,7 +84,11 @@ public class FibonacciHeap {
             res.getRight().setLeft(res.getLeft());
             res.getLeft().setRight(res.getRight());
             res.setPointed(false);
+            res.setChild(null);
             if (res.getRight() == res) {
+                System.out.println(String.format("------------------Debería haber 1 nodo y hay: %d", this.n));
+//                if (this.n > 1)
+//                    System.out.println();
                 this.setMin(null);
             } else {
                 this.setMin(res.getRight());
@@ -95,6 +101,7 @@ public class FibonacciHeap {
 
     private void consolidate() {
         int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2));
+        System.out.println(String.format("Max D = %d", maxD));
         FibonacciNode[] A = new FibonacciNode[maxD + 1];
         for (int i = 0; i <= maxD; i++) {
             A[i] = null;
@@ -170,7 +177,7 @@ public class FibonacciHeap {
                 this.cut(node, par);
                 this.cascadingCut(par);
             }
-            if (node.getKey().getWeight() < this.getMin().getKey().getWeight()) {
+            if (this.getMin() != null && node.getKey().getWeight() < this.getMin().getKey().getWeight()) {
                 this.setMin(node);
             }
         }

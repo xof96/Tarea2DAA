@@ -43,6 +43,8 @@ public class FibonacciNode {
         if (child != null) {
             child.setPointed(true);
             this.setDegree(child.getDegree() + 1);
+        } else {
+            this.setDegree(0);
         }
     }
 
