@@ -129,6 +129,7 @@ public class FibonacciHeap {
                     this.setMin(a);
                 } else {
                     this.insert(A[i]);
+                    this.n--;  // Because insert increases n value;
                 }
             }
         }
@@ -193,6 +194,7 @@ public class FibonacciHeap {
             }
         }
         this.insert(node);
+        this.n--;  // Because insert increases n value;
         node.setP(null);
         node.setMark(false);
     }
