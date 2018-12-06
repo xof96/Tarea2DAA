@@ -7,30 +7,37 @@ import experiments.DijkArr;
 import experiments.DijkHeap;
 import structs.GraphWay;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Arraytest {
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         Graph generador = new Graph();
         DijkArr dijkstra = new DijkArr();
-        ArrayList<GraphWay>[] mat = generador.generateGraph(5, 2);
+        ArrayList<GraphWay>[] mat3 = generador.generateGraph(5, 2);
 
-        double[][] printmat=new double[5][5];
-        for (int i=0;i<5;i++){
-            for (int j=0;j<mat[i].size();j++){
-                printmat[i][mat[i].get(j).getNode()]=mat[i].get(j).getWeight();
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
+        ArrayList<GraphWay>[] mat  = (ArrayList<GraphWay>[]) in.readObject();
+
+        double[][] printmat = new double[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < mat[i].size(); j++) {
+                printmat[i][mat[i].get(j).getNode()] = mat[i].get(j).getWeight();
             }
         }
-        for (int i=0;i<5;i++){
-            for (int j=0;j<5;j++){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 //printmat[j][i]=printmat[i][j];
-                System.out.print(printmat[i][j]+" ");
+                System.out.print(printmat[i][j] + " ");
             }
             System.out.println();
         }
-        Pair cdArr=dijkstra.makeDijsktra(mat);
+        Pair cdArr = dijkstra.makeDijsktra(mat);
         int[] caminoMin = (int[]) cdArr.getKey();
-        double[] distMin=(double[]) cdArr.getValue();
+        double[] distMin = (double[]) cdArr.getValue();
 
         for (int i = 0; i < caminoMin.length; i++) {
             System.out.print(caminoMin[i] + " ");
@@ -41,7 +48,7 @@ public class Arraytest {
         }
         System.out.println();
         DijkHeap dijh = new DijkHeap();
-        Pair cdHeap=dijh.dijsktra(mat,0);
+        Pair cdHeap = dijh.dijsktra(mat, 0);
         int[] caminoMinH = (int[]) cdHeap.getKey();
         double[] distMinH = (double[]) cdHeap.getValue();
         for (int i = 0; i < caminoMinH.length; i++) {
@@ -53,8 +60,8 @@ public class Arraytest {
         }
         System.out.println();
 
-        DijkFib dijf=new DijkFib();
-        Pair cdFib=dijf.dijsktra(mat,0);
+        DijkFib dijf = new DijkFib();
+        Pair cdFib = dijf.dijsktra(mat, 0);
         int[] caminoMinF = (int[]) cdFib.getKey();
         double[] distMinF = (double[]) cdFib.getValue();
         for (int i = 0; i < caminoMinF.length; i++) {

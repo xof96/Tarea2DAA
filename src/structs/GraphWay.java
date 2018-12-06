@@ -1,6 +1,8 @@
 package structs;
 
-public class GraphWay {
+import java.io.Serializable;
+
+public class GraphWay implements Serializable {
     private int node;
     private double weight;
 

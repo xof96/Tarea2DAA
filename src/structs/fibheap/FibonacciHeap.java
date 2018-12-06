@@ -85,8 +85,8 @@ public class FibonacciHeap {
             }
             res.getRight().setLeft(res.getLeft());
             res.getLeft().setRight(res.getRight());
-            res.setPointed(false);
-            res.setChild(null);
+            //res.setPointed(false); no deberia ser necesario
+            //res.setChild(null); no deberia ser necesario
             if (res.getRight() == res) {
                 System.out.println(String.format("------------------Debería haber 1 nodo y hay: %d", this.n));
 //                if (this.n > 1)
@@ -94,8 +94,11 @@ public class FibonacciHeap {
                 this.setMin(null);
             } else {
                 this.setMin(res.getRight());
-                res.setRight(res);
-                res.setLeft(res);
+                System.out.println("arbol al extraer el minimo antes del consolidate: ");
+                this.print();
+                //this.getMin().setPointed(true);
+                //res.setRight(res); no deberia ser necesario
+                //res.setLeft(res); no deberia ser necesario
                 this.consolidate();
             }
             this.n--;
@@ -104,7 +107,7 @@ public class FibonacciHeap {
     }
 
     private void consolidate() {
-        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2));
+        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2)) + 1;
         System.out.println(String.format("Max D = %d", maxD));
         FibonacciNode[] A = new FibonacciNode[maxD + 1];
         for (int i = 0; i <= maxD; i++) {
@@ -115,6 +118,7 @@ public class FibonacciHeap {
         A[d] = currNode;
         currNode = currNode.getRight();
         while (!currNode.isPointed()) {
+            FibonacciNode nextToCheck=currNode.getRight();
             d = currNode.getDegree();
             while (A[d] != null) {
                 FibonacciNode yNode = A[d];
@@ -128,8 +132,9 @@ public class FibonacciHeap {
                 d++;
             }
             A[d] = currNode;
-            currNode = currNode.getRight();
+            currNode = nextToCheck;
         }
+        //A[0].print(0);
         this.setMin(null);
         for (int i = 0; i <= maxD; i++) {
             if (A[i] != null) {
@@ -191,11 +196,19 @@ public class FibonacciHeap {
             if (node.getRight() == node) {
                 par.setChild(null);
             } else {
-                par.setChild(node.getRight());
                 node.getRight().setLeft(node.getLeft());
                 node.getLeft().setRight(node.getRight());
+                if (par.getChild().getKey().getNode() == node.getKey().getNode()) {
+                    par.setChild(node.getRight());
+                }
             }
             node.setPointed(false);
+        } else {
+            node.getRight().setLeft(node.getLeft());
+            node.getLeft().setRight(node.getRight());
+            if (par.getChild().getKey().getNode() == node.getKey().getNode()) {
+                par.setChild(node.getRight());
+            }
         }
         if (par.getDegree() == node.getDegree() + 1) {
             FibonacciNode b_par = par;

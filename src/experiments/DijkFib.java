@@ -5,11 +5,15 @@ import structs.GraphWay;
 import structs.fibheap.FibonacciHeap;
 import structs.fibheap.FibonacciNode;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class DijkFib {
 
-    public Pair dijsktra(ArrayList<GraphWay>[] graph, int origen) {
+    public Pair dijsktra(ArrayList<GraphWay>[] graph, int origen) throws IOException {
         int n = graph.length;
         FibonacciHeap Q = new FibonacciHeap(n);
         int MAX_INT = 10000000;//cambiarlo
@@ -26,8 +30,11 @@ public class DijkFib {
             Q.insert(x);
         }
 
+        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("./mat.txt"));
+
         try {
             while (Q.getN() != 0) {
+                Q.print();
                 System.out.println(String.format("Voy a extraer el mínimo = %s, cuando me quedan %d nodos", Q.getMin(), Q.getN()));
                 FibonacciNode min = Q.extractMin();
                 if (min == null) {
@@ -35,6 +42,7 @@ public class DijkFib {
                 }
                 int m = min.getKey().getNode();
                 System.out.println(String.format("Ya extraje el mínimo y me quedaron %d nodos", Q.getN()));
+                Q.print();
                 for (int v = 0; v < graph[m].size(); v++) {
                     double nuevaDist = dist[m] + graph[m].get(v).getWeight();
                     if (nuevaDist < dist[graph[m].get(v).getNode()]) {
@@ -42,6 +50,7 @@ public class DijkFib {
                         prev[graph[m].get(v).getNode()] = m;
                         System.out.println(String.format("Min antes del decrease: %s", Q.getMin()));
                         Q.decreaseKey(graph[m].get(v).getNode(), nuevaDist);
+                        Q.print();
                         System.out.println(String.format("Min después del decrease: %s", Q.getMin()));
                     }
                 }
@@ -49,6 +58,8 @@ public class DijkFib {
         } catch (NullPointerException e) {
             e.printStackTrace();
             Q.print();
+            o.writeObject(graph);
+            o.close();
         }
         return new Pair(prev, dist);
     }
