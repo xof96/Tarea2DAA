@@ -17,10 +17,10 @@ public class Arraytest {
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Graph generador = new Graph();
         DijkArr dijkstra = new DijkArr();
-        ArrayList<GraphWay>[] mat3 = generador.generateGraph(5, 2);
+        ArrayList<GraphWay>[] mat = generador.generateGraph(5, 2);
 
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
-        ArrayList<GraphWay>[] mat  = (ArrayList<GraphWay>[]) in.readObject();
+        //ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
+        //ArrayList<GraphWay>[] mat  = (ArrayList<GraphWay>[]) in.readObject();
 
         double[][] printmat = new double[5][5];
         for (int i = 0; i < 5; i++) {
@@ -35,6 +35,7 @@ public class Arraytest {
             }
             System.out.println();
         }
+        /*
         Pair cdArr = dijkstra.makeDijsktra(mat);
         int[] caminoMin = (int[]) cdArr.getKey();
         double[] distMin = (double[]) cdArr.getValue();
@@ -59,6 +60,7 @@ public class Arraytest {
             System.out.print(distMinH[i] + " ");
         }
         System.out.println();
+        */
 
         DijkFib dijf = new DijkFib();
         Pair cdFib = dijf.dijsktra(mat, 0);
