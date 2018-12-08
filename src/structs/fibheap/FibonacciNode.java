@@ -10,7 +10,6 @@ public class FibonacciNode {
     private int degree;
     private GraphWay key;
     private boolean mark;
-    private boolean isPointed;
 
     public FibonacciNode(GraphWay key) {
         this.p = null;
@@ -20,55 +19,49 @@ public class FibonacciNode {
         this.degree = 0;
         this.key = key;
         this.mark = false;
-        this.isPointed = false;
     }
 
 
-
-    public FibonacciNode getP() {
+    FibonacciNode getP() {
         return p;
     }
 
-    public void setP(FibonacciNode p) {
+    void setP(FibonacciNode p) {
         this.p = p;
     }
 
-    public FibonacciNode getChild() {
+    FibonacciNode getChild() {
         return child;
     }
 
-    public void setChild(FibonacciNode child) {
-        if (this.child != null)
-            this.child.setPointed(false);
-        this.child = child;
-        if (child != null) {
-            child.setPointed(true);
-        } else {
+    void setChild(FibonacciNode child) {
+        if (child == null) {
             this.setDegree(0);
         }
+        this.child = child;
     }
 
-    public FibonacciNode getLeft() {
+    FibonacciNode getLeft() {
         return left;
     }
 
-    public void setLeft(FibonacciNode left) {
+    void setLeft(FibonacciNode left) {
         this.left = left;
     }
 
-    public FibonacciNode getRight() {
+    FibonacciNode getRight() {
         return right;
     }
 
-    public void setRight(FibonacciNode right) {
+    void setRight(FibonacciNode right) {
         this.right = right;
     }
 
-    public int getDegree() {
+    int getDegree() {
         return degree;
     }
 
-    public void setDegree(int degree) {
+    void setDegree(int degree) {
         this.degree = degree;
     }
 
@@ -80,28 +73,21 @@ public class FibonacciNode {
         this.key = key;
     }
 
-    public boolean hasMark() {
+    boolean hasMark() {
         return mark;
     }
 
-    public void setMark(boolean mark) {
+    void setMark(boolean mark) {
         this.mark = mark;
-    }
-
-    public boolean isPointed() {
-        return isPointed;
-    }
-
-    public void setPointed(boolean pointed) {
-        this.isPointed = pointed;
     }
 
     public String toString() {
         return this.getKey().toString();
     }
 
-    public void print(int tabs) {
-        FibonacciNode currNode = this.getRight();
+    void print(int tabs) {
+        FibonacciNode first = this;
+        FibonacciNode currNode = this.right;
         while (true) {
             for (int i = 0; i < tabs; i++)
                 System.out.print("\t");
@@ -110,9 +96,19 @@ public class FibonacciNode {
             if (child != null) {
                 child.print(tabs + 1);
             }
-            if (currNode.isPointed())
+            if (currNode == first)
                 break;
             currNode = currNode.getRight();
+        }
+    }
+
+    void makeOrphanedChildren() {
+        FibonacciNode first = this;
+        this.setP(null);
+        FibonacciNode sibling = first.right;
+        while (sibling != first) {
+            sibling.setP(null);
+            sibling = sibling.right;
         }
     }
 }

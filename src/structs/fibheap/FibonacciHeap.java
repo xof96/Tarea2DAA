@@ -24,7 +24,6 @@ public class FibonacciHeap {
             min.setRight(x);
             this.graphNodes[x.getKey().getNode()] = x;
             if (x.getKey().getWeight() < min.getKey().getWeight()) {
-                min.setPointed(false);
                 this.setMin(x);
             }
         }
@@ -32,55 +31,44 @@ public class FibonacciHeap {
     }
 
     public FibonacciNode extractMin() {
-        FibonacciNode res = this.getMin();
-        if (res != null) {
-            FibonacciNode child = res.getChild();
+        FibonacciNode min = this.getMin();
+        if (min != null) {
+            FibonacciNode child = min.getChild();
             if (child != null) {
-                FibonacciNode currChild = res.getChild().getRight();
-                FibonacciNode receivingNode = this.getMin();// aca no entiendo
-                while (true) {
-                    FibonacciNode nextNode = currChild.getRight();
-                    currChild.setLeft(receivingNode);//porque
-                    currChild.setRight(receivingNode.getRight());
-                    receivingNode.setRight(currChild);
-                    currChild.getRight().setLeft(currChild);
-                    currChild.setP(null);
-                    if (currChild.isPointed()) {
-                        currChild.setPointed(false);
-                        break;
-                    }
-                    currChild = nextNode;
-                }
+                child.makeOrphanedChildren();
+                FibonacciNode rightChild = child.getRight();
+                min.getLeft().setRight(rightChild);
+                rightChild.setLeft(min.getLeft());
+                min.setLeft(child);
+                child.setRight(min);
+                min.setChild(null);
             }
-            res.getRight().setLeft(res.getLeft());
-            res.getLeft().setRight(res.getRight());
-            //res.setPointed(false); no deberia ser necesario
-            //res.setChild(null); no deberia ser necesario
-            if (res.getRight() == res) {
+            min.getRight().setLeft(min.getLeft());
+            min.getLeft().setRight(min.getRight());
+            if (min.getRight() == min) {
                 this.setMin(null);
             } else {
-                this.setMin(res.getRight());
-                //this.getMin().setPointed(true);
-                //res.setRight(res); no deberia ser necesario
-                //res.setLeft(res); no deberia ser necesario
+                this.setMin(min.getRight());
                 this.consolidate();
             }
             this.n--;
         }
-        return res;
+        return min;
     }
 
     private void consolidate() {
-        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2)) + 1;
+        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2)) + 2;
+        System.out.println(maxD);
         FibonacciNode[] A = new FibonacciNode[maxD + 1];
         for (int i = 0; i <= maxD; i++) {
             A[i] = null;
         }
+        FibonacciNode lastInReview = this.getMin().getLeft();
         FibonacciNode currNode = this.getMin();
         int d = currNode.getDegree();
         A[d] = currNode;
         currNode = currNode.getRight();
-        while (!currNode.isPointed()) {
+        while (true) {
             FibonacciNode nextToCheck = currNode.getRight();
             d = currNode.getDegree();
             while (A[d] != null) {
@@ -95,6 +83,8 @@ public class FibonacciHeap {
                 d++;
             }
             A[d] = currNode;
+            if (currNode == lastInReview)
+                break;
             currNode = nextToCheck;
         }
         this.setMin(null);
@@ -118,10 +108,6 @@ public class FibonacciHeap {
         y.getLeft().setRight(y.getRight());
         y.setRight(y);
         y.setLeft(y);
-
-        if (y.isPointed()) {
-            x.setPointed(true);
-        }
 
         if (x.getChild() != null) {
             FibonacciNode currNode = x.getChild();
@@ -148,31 +134,20 @@ public class FibonacciHeap {
                 this.cascadingCut(par);
             }
             if (this.getMin() != null && node.getKey().getWeight() < this.getMin().getKey().getWeight()) {
-                this.min.setPointed(false);
                 this.setMin(node);
             }
         }
     }
 
     private void cut(FibonacciNode node, FibonacciNode par) {
-        if (node.isPointed()) {
-            if (node.getRight() == node) {
-                par.setChild(null);
-            } else {
-                node.getRight().setLeft(node.getLeft());
-                node.getLeft().setRight(node.getRight());
-                if (par.getChild().getKey().getNode() == node.getKey().getNode()) {
-                    par.setChild(node.getRight());
-                }
-            }
-            node.setPointed(false);
+        if (node.getRight() == node) {
+            par.setChild(null);
         } else {
-            node.getRight().setLeft(node.getLeft());
-            node.getLeft().setRight(node.getRight());
-            if (par.getChild().getKey().getNode() == node.getKey().getNode()) {
-                par.setChild(node.getRight());
-            }
+            par.setChild(node.getRight());
         }
+        node.getRight().setLeft(node.getLeft());
+        node.getLeft().setRight(node.getRight());
+
         if (par.getDegree() == node.getDegree() + 1) {
             FibonacciNode b_par = par;
             par.setDegree(node.getDegree());
@@ -196,8 +171,6 @@ public class FibonacciHeap {
                 this.cut(par, z);
                 this.cascadingCut(z);
             }
-        } else {
-            par.setPointed(false);
         }
     }
 
@@ -214,10 +187,7 @@ public class FibonacciHeap {
     }
 
     public void setMin(FibonacciNode min) {
-        // if min ==null y this.min!= null this.min= null
         this.min = min;
-        if (min != null)
-            min.setPointed(true);
     }
 
     public boolean isEmpty() {
