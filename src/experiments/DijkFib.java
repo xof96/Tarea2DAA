@@ -44,7 +44,8 @@ public class DijkFib {
                     }
                 }
             }
-        } catch (NullPointerException) {
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             o.write(graph);
             o.close();
         }
