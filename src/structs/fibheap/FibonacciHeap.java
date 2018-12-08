@@ -31,33 +31,6 @@ public class FibonacciHeap {
         this.n++;
     }
 
-    /*
-        public static FibonacciHeap Union(FibonacciHeap h1, FibonacciHeap h2) {
-            FibonacciHeap h = new FibonacciHeap();
-            h.setMin(h1.getMin());
-            FibonacciNode currNode = h2.getMin();
-            currNode.setPointed(false);
-            FibonacciNode currNodeR = h2.getMin().getRight();
-            FibonacciNode receivingNode = h.getMin();
-            FibonacciNode receivingNodeL = h.getMin().getLeft();
-            // Root lists are joined.
-            currNodeR.setLeft(receivingNodeL);
-            receivingNodeL.setRight(currNodeR);
-            currNode.setRight(receivingNode);
-            receivingNode.setLeft(currNode);
-
-            if (h1.getMin() == null ||
-                    (h2.getMin() != null && h2.getMin().getKey().getWeight() < h1.getMin().getKey().getWeight())) {
-                if (h.getMin() != null) {
-                    h.getMin().setPointed(false);
-                }
-                h.setMin(h2.getMin());
-            }
-            h.setN(h1.getN() + h2.getN());
-            return h;
-        }
-    */
-
     public FibonacciNode extractMin() {
         FibonacciNode res = this.getMin();
         if (res != null) {
@@ -175,7 +148,7 @@ public class FibonacciHeap {
                 this.cascadingCut(par);
             }
             if (this.getMin() != null && node.getKey().getWeight() < this.getMin().getKey().getWeight()) {
-               this.min.setPointed(false);
+                this.min.setPointed(false);
                 this.setMin(node);
             }
         }
@@ -223,17 +196,10 @@ public class FibonacciHeap {
                 this.cut(par, z);
                 this.cascadingCut(z);
             }
-        }else{
+        } else {
             par.setPointed(false);
         }
     }
-
-    /*
-        public FibonacciNode delete(FibonacciNode x) {
-            this.decreaseKey(x, Double.NEGATIVE_INFINITY);
-            return this.extractMin();
-        }
-    */
 
     public int getN() {
         return n;
