@@ -24,6 +24,7 @@ public class FibonacciNode {
     }
 
 
+
     public FibonacciNode getP() {
         return p;
     }
