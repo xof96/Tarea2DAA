@@ -9,7 +9,7 @@ import experiments.DijkArr;
 import javafx.util.Pair;
 import java.util.ArrayList;
 
-public class Arraytest {
+public class Test {
     public static void main(String args[]) {
         Graph generador = new Graph();
         DijkArr dijkstra = new DijkArr();
