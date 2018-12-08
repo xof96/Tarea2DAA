@@ -20,8 +20,6 @@ public class Test {
         DijkArr dijkstra = new DijkArr();
         ArrayList<GraphWay>[] mat = generador.generateGraph(5, 2);
 
-        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("./mat.txt"));
-
 //        double[][] printmat = new double[5][5];
 //        for (int i = 0; i < 5; i++) {
 //            for (int j = 0; j < mat[i].size(); j++) {
@@ -53,12 +51,8 @@ public class Test {
 
         System.out.println("#############################################");
         DijkHeap dijh = new DijkHeap();
-        try {
-            ini = System.currentTimeMillis();
-            Pair cdHeap = dijh.dijsktra(mat, 0);
-        } catch (Exception) {
-            o.write(mat);
-        }
+        ini = System.currentTimeMillis();
+        Pair cdHeap = dijh.dijsktra(mat, 0);
         fin = System.currentTimeMillis();
         System.out.println(fin - ini);
         int[] caminoMinH = (int[]) cdHeap.getKey();
