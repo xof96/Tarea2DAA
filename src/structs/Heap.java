@@ -13,14 +13,20 @@ public class Heap {
     }
 
     public void insert(GraphWay x) {
-        this.heapArray.add(x);
-        int my_index = this.heapArray.size() - 1;
-        int parent_index = this.parent_index(my_index);
-        while (parent_index != my_index &&
-                this.heapArray.get(my_index).getWeight() < this.heapArray.get(parent_index).getWeight()) {
-            this.swap(my_index, parent_index);
-            my_index = parent_index;
-            parent_index = this.parent_index(my_index);
+        if (this.isEmpty()) {
+            this.heapArray.add(x);
+            this.graphNodes[x.getNode()] = 0;
+        } else {
+            this.heapArray.add(x);
+            int my_index = this.heapArray.size() - 1;
+            int parent_index = this.parent_index(my_index);
+            while (parent_index != my_index &&
+                    this.heapArray.get(my_index).getWeight() < this.heapArray.get(parent_index).getWeight()) {
+                this.swap(my_index, parent_index);
+                my_index = parent_index;
+                parent_index = this.parent_index(my_index);
+            }
+            this.graphNodes[x.getNode()] = my_index;
         }
     }
 
@@ -50,7 +56,7 @@ public class Heap {
                 this.graphNodes[min.getNode()] = -1;
                 return min;
             } else {
-                GraphWay min = this.heapArray.get(0);
+                GraphWay min = this.getMin();
                 this.graphNodes[min.getNode()] = -1;
                 GraphWay last = this.heapArray.remove(this.size() - 1);
                 this.heapArray.set(0, last);
