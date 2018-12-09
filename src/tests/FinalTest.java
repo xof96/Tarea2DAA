@@ -1,8 +1,8 @@
 package tests;
 
-import experiments.DijkArr;
-import experiments.DijkFib;
-import experiments.DijkHeap;
+import dijkstra.DijkArr;
+import dijkstra.DijkFib;
+import dijkstra.DijkHeap;
 import javafx.util.Pair;
 import structs.Graph;
 import structs.GraphWay;
@@ -21,7 +21,9 @@ public class FinalTest {
         for (int time = 0; time < times; time++) {
             System.out.println(String.format("Experimento N°%d", time + 1));
             Graph graph = new Graph();
-            ArrayList<GraphWay>[] mat = graph.generateGraph(100000, 100 );//ajustar parametros para la ram de cada uno
+
+            // n = Nodos, x = 10, 100, 250 Factor para calcular número de aristas..
+            ArrayList<GraphWay>[] mat = graph.generateGraph(100000, 100);
             System.out.println("Ya se creó la lista de adyacencia");
             DijkArr dijkstra = new DijkArr();
             double ini = System.currentTimeMillis();

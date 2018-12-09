@@ -1,4 +1,4 @@
-package experiments;
+package dijkstra;
 
 import javafx.util.Pair;
 import structs.GraphWay;

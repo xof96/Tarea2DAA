@@ -2,9 +2,9 @@ package tests;
 
 import structs.Graph;
 import structs.GraphWay;
-import experiments.DijkFib;
-import experiments.DijkHeap;
-import experiments.DijkArr;
+import dijkstra.DijkFib;
+import dijkstra.DijkHeap;
+import dijkstra.DijkArr;
 
 import javafx.util.Pair;
 
