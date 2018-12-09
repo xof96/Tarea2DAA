@@ -13,35 +13,18 @@ public class Heap {
     }
 
     public void insert(GraphWay x) {
-        if (this.heapArray.isEmpty()) {
+        if (this.isEmpty()) {
             this.heapArray.add(x);
             this.graphNodes[x.getNode()] = 0;
         } else {
             this.heapArray.add(x);
             int my_index = this.heapArray.size() - 1;
-            int parent_index = this.heapArray.size() / 2 - 1;
-            if (this.heapArray.get(parent_index).getWeight() > x.getWeight()) {
-                GraphWay buf = this.heapArray.remove(parent_index);
-                this.heapArray.add(parent_index, x);
-                this.graphNodes[x.getNode()] = parent_index;
-                this.heapArray.remove(my_index);
-                this.heapArray.add(buf);
-                this.graphNodes[buf.getNode()] = my_index;
-            } else {
-                this.graphNodes[x.getNode()] = my_index;
-                return;
-            }
-            my_index = parent_index;
-            parent_index = (parent_index + 1) / 2 - 1;
-            while (my_index > 0 && this.heapArray.get(parent_index).getWeight() > x.getWeight()) {
-                GraphWay buf = this.heapArray.remove(parent_index);
-                this.heapArray.add(parent_index, x);
-                this.graphNodes[x.getNode()] = parent_index;
-                this.heapArray.remove(my_index);
-                this.heapArray.add(my_index, buf);
-                this.graphNodes[buf.getNode()] = my_index;
+            int parent_index = this.parent_index(my_index);
+            while (parent_index != my_index &&
+                    this.heapArray.get(my_index).getWeight() < this.heapArray.get(parent_index).getWeight()) {
+                this.swap(my_index, parent_index);
                 my_index = parent_index;
-                parent_index = (parent_index + 1) / 2 - 1;
+                parent_index = this.parent_index(my_index);
             }
             this.graphNodes[x.getNode()] = my_index;
         }
@@ -49,20 +32,15 @@ public class Heap {
 
     public void decreaseKey(int g_index, double value) {
         int index = this.graphNodes[g_index];
-        if (index < 0)
-            return;
-        if (value < this.heapArray.get(index).getWeight()) {
-            this.heapArray.get(index).setWeight(value);
-            int parent_index = (index + 1) / 2 - 1;
-            while (index > 0 && this.heapArray.get(parent_index).getWeight() > value) {
-                GraphWay buf = this.heapArray.remove(parent_index);
-                this.heapArray.add(parent_index, this.heapArray.get(index - 1));
-                this.graphNodes[g_index] = parent_index;
-                this.heapArray.remove(index);
-                this.heapArray.add(index, buf);
-                this.graphNodes[buf.getNode()] = index;
-                index = parent_index;
-                parent_index = (parent_index + 1) / 2 - 1;
+        if (index > 0) {
+            if (value < this.heapArray.get(index).getWeight()) {
+                this.heapArray.get(index).setWeight(value);
+                int parent_index = this.parent_index(index);
+                while (index > 0 && this.heapArray.get(parent_index).getWeight() > value) {
+                    this.swap(index, parent_index);
+                    index = parent_index;
+                    parent_index = this.parent_index(index);
+                }
             }
         }
     }
@@ -72,52 +50,42 @@ public class Heap {
     }
 
     public GraphWay extractMin() {
-        if (!this.heapArray.isEmpty()) {
-            GraphWay res = this.heapArray.remove(0);
-            this.graphNodes[res.getNode()] = -1;
-            if (!this.heapArray.isEmpty()) {
-                int size = this.heapArray.size();
-                GraphWay last = this.heapArray.remove(size - 1);
-                this.heapArray.add(0, last);
+        if (!this.isEmpty()) {
+            if (this.size() == 1) {
+                GraphWay min = this.heapArray.remove(0);
+                this.graphNodes[min.getNode()] = -1;
+                return min;
+            } else {
+                GraphWay min = this.getMin();
+                this.graphNodes[min.getNode()] = -1;
+                GraphWay last = this.heapArray.remove(this.size() - 1);
+                this.heapArray.set(0, last);
                 this.graphNodes[last.getNode()] = 0;
                 int currIndex = 0, leftChildIndex = 1, rightChildIndex = 2;
-                while (leftChildIndex < size - 1 && rightChildIndex < size - 1) {
+                while (leftChildIndex < this.size() && rightChildIndex < this.size()) {
                     GraphWay l = this.heapArray.get(leftChildIndex);
                     GraphWay r = this.heapArray.get(rightChildIndex);
                     if (this.heapArray.get(currIndex).getWeight() < Math.min(l.getWeight(), r.getWeight()))
                         break;
-                    GraphWay buf = this.heapArray.remove(currIndex);
                     if (r.getWeight() <= l.getWeight()) {
-                        this.heapArray.add(currIndex, r);
-                        this.graphNodes[r.getNode()] = currIndex;
-                        this.heapArray.add(rightChildIndex, buf);
-                        this.graphNodes[buf.getNode()] = rightChildIndex;
-                        this.heapArray.remove(rightChildIndex + 1);
+                        this.swap(currIndex, rightChildIndex);
                         currIndex = rightChildIndex;
                     } else {
-                        this.heapArray.add(currIndex, l);
-                        this.graphNodes[l.getNode()] = currIndex;
-                        this.heapArray.add(leftChildIndex, buf);
-                        this.graphNodes[buf.getNode()] = leftChildIndex;
-                        this.heapArray.remove(leftChildIndex + 1);
+                        this.swap(currIndex, leftChildIndex);
                         currIndex = leftChildIndex;
                     }
-
                     leftChildIndex = currIndex * 2 + 1;
                     rightChildIndex = currIndex * 2 + 2;
                 }
 
-                if (leftChildIndex < size - 1) {
+                if (leftChildIndex < this.size()) {
                     GraphWay l = this.heapArray.get(leftChildIndex);
-                    GraphWay buf = this.heapArray.remove(currIndex);
-                    this.heapArray.add(currIndex, l);
-                    this.graphNodes[l.getNode()] = currIndex;
-                    this.heapArray.add(leftChildIndex, buf);
-                    this.graphNodes[buf.getNode()] = leftChildIndex;
-                    this.heapArray.remove(leftChildIndex + 1);
+                    if (this.heapArray.get(currIndex).getWeight() > l.getWeight()) {
+                        this.swap(currIndex, leftChildIndex);
+                    }
                 }
+                return min;
             }
-            return res;
         } else {
             return null;
         }
@@ -133,6 +101,21 @@ public class Heap {
 
     public int size() {
         return this.heapArray.size();
+    }
+
+    private int parent_index(int my_index) {
+        if (my_index % 2 == 1) {
+            return my_index / 2;
+        }
+        return (my_index - 1) / 2;
+    }
+
+    private void swap(int f_index, int s_index) {
+        GraphWay buf = this.heapArray.get(f_index);
+        this.graphNodes[this.heapArray.get(s_index).getNode()] = f_index;
+        this.heapArray.set(f_index, this.heapArray.get(s_index));
+        this.graphNodes[buf.getNode()] = s_index;
+        this.heapArray.set(s_index, buf);
     }
 
     public void print() {

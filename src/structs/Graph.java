@@ -18,7 +18,7 @@ public class Graph {
             double costo=rand.nextDouble();
             graph[i].add(new GraphWay(i+1,costo));
             vecinos[i].add(i+1);
-            graph[i+1].add(new GraphWay(i,costo));
+            //graph[i+1].add(new GraphWay(i,costo));
             vecinos[i+1].add(i);
         }
         int e = n * x;
@@ -34,7 +34,7 @@ public class Graph {
             double costo=rand.nextDouble();
             graph[a].add(new GraphWay(b,costo));
             vecinos[a].add(b);
-            graph[b].add(new GraphWay(a,costo));
+            //graph[b].add(new GraphWay(a,costo));
             vecinos[b].add(a);
 
             aristas++;
