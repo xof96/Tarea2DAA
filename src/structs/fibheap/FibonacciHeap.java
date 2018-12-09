@@ -57,7 +57,7 @@ public class FibonacciHeap {
     }
 
     private void consolidate() {
-        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2)) + 2;
+        int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2));
         FibonacciNode[] A = new FibonacciNode[maxD + 1];
         for (int i = 0; i <= maxD; i++) {
             A[i] = null;

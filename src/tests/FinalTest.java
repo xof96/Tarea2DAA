@@ -14,14 +14,14 @@ import java.util.ArrayList;
 public class FinalTest {
 
     public static void main(String args[]) throws IOException {
-        int times = 1;
+        int times = 10;
         double[] timesArr = new double[times];
         double[] timesHeap = new double[times];
         double[] timesFib = new double[times];
         for (int time = 0; time < times; time++) {
             System.out.println(String.format("Experimento N°%d", time + 1));
             Graph graph = new Graph();
-            ArrayList<GraphWay>[] mat = graph.generateGraph(100000, 10);//ajustar parametros para la ram de cada uno
+            ArrayList<GraphWay>[] mat = graph.generateGraph(100000, 250 );//ajustar parametros para la ram de cada uno
             System.out.println("Ya se creó la lista de adyacencia");
             DijkArr dijkstra = new DijkArr();
             double ini = System.currentTimeMillis();
@@ -47,16 +47,16 @@ public class FinalTest {
             System.out.println();*/
 
             System.out.println("Ya terminó el Heap");
-            DijkFib dijF = new DijkFib();
-            double iniF = System.currentTimeMillis();
-            Pair cdFib = dijF.dijsktra(mat, 0);
-            double finF = System.currentTimeMillis();
-            timesFib[time] = finF - iniF;
+//            DijkFib dijF = new DijkFib();
+//            double iniF = System.currentTimeMillis();
+//            Pair cdFib = dijF.dijsktra(mat, 0);
+//            double finF = System.currentTimeMillis();
+//            timesFib[time] = finF - iniF;
         }
         for (int j = 0; j < times; j++) {
             System.out.print(timesArr[j] + " ");
-            System.out.print(timesHeap[j] + " ");
-            System.out.print(timesFib[j] + "\n");
+            System.out.print(timesHeap[j] + "\n");
+//            System.out.print(timesFib[j] + "\n");
         }
     }
 }
