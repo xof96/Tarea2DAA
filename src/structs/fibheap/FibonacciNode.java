@@ -35,9 +35,6 @@ public class FibonacciNode {
     }
 
     void setChild(FibonacciNode child) {
-        if (child == null) {
-            this.setDegree(0);
-        }
         this.child = child;
     }
 

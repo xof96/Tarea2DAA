@@ -7,12 +7,13 @@ import javafx.util.Pair;
 import structs.Graph;
 import structs.GraphWay;
 
+import java.io.IOException;
 import java.lang.System;
 import java.util.ArrayList;
 
 public class FinalTest {
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         int times = 1;
         double[] timesArr = new double[times];
         double[] timesHeap = new double[times];

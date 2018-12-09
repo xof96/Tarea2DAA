@@ -8,17 +8,18 @@ import experiments.DijkArr;
 
 import javafx.util.Pair;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Test {
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         Graph generador = new Graph();
         DijkArr dijkstra = new DijkArr();
-        ArrayList<GraphWay>[] mat = generador.generateGraph(5, 2);
+        ArrayList<GraphWay>[] mat = generador.generateGraph(15, 2);
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
+
+//        ArrayList<GraphWay>[] mat = (ArrayList<GraphWay>[]) in.readObject();
 
 //        double[][] printmat = new double[5][5];
 //        for (int i = 0; i < 5; i++) {

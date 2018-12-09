@@ -1,12 +1,10 @@
 package experiments;
 
 import javafx.util.Pair;
-import jdk.nashorn.internal.runtime.ECMAException;
 import structs.GraphWay;
 import structs.fibheap.FibonacciHeap;
 import structs.fibheap.FibonacciNode;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 public class DijkFib {
 
     public Pair dijsktra(ArrayList<GraphWay>[] graph, int origen) throws IOException {
-        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("./mat.txt"));
         int n = graph.length;
         FibonacciHeap Q = new FibonacciHeap(n);
         int MAX_INT = 10000000;//cambiarlo
@@ -31,8 +28,9 @@ public class DijkFib {
             FibonacciNode x = new FibonacciNode(nodo);
             Q.insert(x);
         }
+        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("./mat.txt"));
         try {
-            while (Q.getN() != 0) {
+            while (!Q.isEmpty()) {
                 FibonacciNode min = Q.extractMin();
                 int m = min.getKey().getNode();
                 for (int v = 0; v < graph[m].size(); v++) {
@@ -46,7 +44,7 @@ public class DijkFib {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
-            o.write(graph);
+            o.writeObject(graph);
             o.close();
         }
 

@@ -58,31 +58,29 @@ public class FibonacciHeap {
 
     private void consolidate() {
         int maxD = (int) Math.ceil(Math.log(this.n) / Math.log(2)) + 2;
-        System.out.println(maxD);
         FibonacciNode[] A = new FibonacciNode[maxD + 1];
         for (int i = 0; i <= maxD; i++) {
             A[i] = null;
         }
         FibonacciNode lastInReview = this.getMin().getLeft();
         FibonacciNode currNode = this.getMin();
-        int d = currNode.getDegree();
-        A[d] = currNode;
-        currNode = currNode.getRight();
+        int d;
         while (true) {
             FibonacciNode nextToCheck = currNode.getRight();
             d = currNode.getDegree();
+            FibonacciNode nodeToBeHung = currNode;
             while (A[d] != null) {
                 FibonacciNode yNode = A[d];
                 if (currNode.getKey().getWeight() > yNode.getKey().getWeight()) {
-                    FibonacciNode buf = yNode;
-                    yNode = currNode;
-                    currNode = buf;
+                    this.link(currNode, yNode);
+                    nodeToBeHung = yNode;
+                } else {
+                    this.link(yNode, currNode);
                 }
-                this.link(yNode, currNode);
                 A[d] = null;
                 d++;
             }
-            A[d] = currNode;
+            A[d] = nodeToBeHung;
             if (currNode == lastInReview)
                 break;
             currNode = nextToCheck;
@@ -120,7 +118,7 @@ public class FibonacciHeap {
 
         y.setP(x);
         x.setChild(y);
-        x.setDegree(y.getDegree() + 1);
+        x.setDegree(x.getDegree() + 1);
         y.setMark(false);
     }
 
@@ -147,15 +145,7 @@ public class FibonacciHeap {
         }
         node.getRight().setLeft(node.getLeft());
         node.getLeft().setRight(node.getRight());
-
-        if (par.getDegree() == node.getDegree() + 1) {
-            FibonacciNode b_par = par;
-            par.setDegree(node.getDegree());
-            while (b_par.getP() != null && b_par.getP().getDegree() == b_par.getDegree() + 2) {
-                b_par.getP().setDegree(b_par.getP().getDegree() - 1);
-                b_par = b_par.getP();
-            }
-        }
+        par.setDegree(par.getDegree() - 1);
         this.insert(node);
         this.n--;  // Because insert increases n value;
         node.setP(null);
