@@ -28,6 +28,6 @@ public class GraphWay implements Serializable {
     }
 
     public String toString() {
-        return String.format("Nodo %s, costo hacia el origen: %f", this.node, this.weight);
+        return String.format("Nodo %s, costo: %f", this.node, this.weight);
     }
 }
