@@ -68,20 +68,20 @@ public class FibonacciHeap {
         while (true) {
             FibonacciNode nextToCheck = currNode.getRight();
             d = currNode.getDegree();
-            FibonacciNode nodeToBeHung = currNode;
+            FibonacciNode breakNodeVerifier = currNode;
             while (A[d] != null) {
                 FibonacciNode yNode = A[d];
                 if (currNode.getKey().getWeight() > yNode.getKey().getWeight()) {
-                    this.link(currNode, yNode);
-                    nodeToBeHung = yNode;
-                } else {
-                    this.link(yNode, currNode);
+                    FibonacciNode buf = currNode;
+                    currNode = yNode;
+                    yNode = buf;
                 }
+                this.link(yNode, currNode);
                 A[d] = null;
                 d++;
             }
-            A[d] = nodeToBeHung;
-            if (currNode == lastInReview)
+            A[d] = currNode;
+            if (breakNodeVerifier == lastInReview)
                 break;
             currNode = nextToCheck;
         }
@@ -176,7 +176,7 @@ public class FibonacciHeap {
         return min;
     }
 
-    public void setMin(FibonacciNode min) {
+    private void setMin(FibonacciNode min) {
         this.min = min;
     }
 
