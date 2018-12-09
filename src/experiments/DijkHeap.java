@@ -23,6 +23,7 @@ public class DijkHeap {
             GraphWay nodo = new GraphWay(v, dist[v]);
             Q.insert(nodo);
         }
+        double inicio=System.currentTimeMillis();
         while (!Q.isEmpty()) {
             int m = Q.extractMin().getNode();
             for (int v = 0; v < graph[m].size(); v++) {
@@ -34,6 +35,8 @@ public class DijkHeap {
                 }
             }
         }
+        double fin=System.currentTimeMillis();
+        System.out.println("tiempo del while: "+(fin-inicio));
         return new Pair(prev, dist);
     }
 }

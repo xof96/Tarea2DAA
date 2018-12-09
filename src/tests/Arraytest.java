@@ -17,19 +17,20 @@ public class Arraytest {
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Graph generador = new Graph();
         DijkArr dijkstra = new DijkArr();
-        ArrayList<GraphWay>[] mat3 = generador.generateGraph(5, 2);
+        ArrayList<GraphWay>[] mat3 = generador.generateGraph(50, 2);
 
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
-        ArrayList<GraphWay>[] mat  = (ArrayList<GraphWay>[]) in.readObject();
+        //ObjectInputStream in = new ObjectInputStream(new FileInputStream("./mat.txt"));
+        //ArrayList<GraphWay>[] mat  = (ArrayList<GraphWay>[]) in.readObject();
+        ArrayList<GraphWay>[] mat=mat3;
 
-        double[][] printmat = new double[5][5];
+        double[][] printmat = new double[50][50];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < mat[i].size(); j++) {
                 printmat[i][mat[i].get(j).getNode()] = mat[i].get(j).getWeight();
             }
         }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
                 //printmat[j][i]=printmat[i][j];
                 System.out.print(printmat[i][j] + " ");
             }

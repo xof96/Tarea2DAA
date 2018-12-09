@@ -4,6 +4,8 @@ import javafx.util.Pair;
 import structs.GraphWay;
 import structs.fibheap.FibonacciHeap;
 import structs.fibheap.FibonacciNode;
+import structs.fibheap2.FibHeap;
+import structs.fibheap2.FibNode;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,7 +17,8 @@ public class DijkFib {
 
     public Pair dijsktra(ArrayList<GraphWay>[] graph, int origen) throws IOException {
         int n = graph.length;
-        FibonacciHeap Q = new FibonacciHeap(n);
+        //FibonacciHeap Q = new FibonacciHeap(n);
+        FibHeap Q=new FibHeap(n);
         int MAX_INT = 10000000;//cambiarlo
         double[] dist = new double[n];
         int[] prev = new int[n];
@@ -26,7 +29,8 @@ public class DijkFib {
                 dist[v] = MAX_INT;
             }
             GraphWay nodo = new GraphWay(v, dist[v]);
-            FibonacciNode x = new FibonacciNode(nodo);
+            //FibonacciNode x = new FibonacciNode(nodo);
+            FibNode x=new FibNode(nodo);
             Q.insert(x);
         }
 
@@ -36,13 +40,15 @@ public class DijkFib {
             while (Q.getN() != 0) {
                 Q.print();
                 System.out.println(String.format("Voy a extraer el mínimo = %s, cuando me quedan %d nodos", Q.getMin(), Q.getN()));
-                FibonacciNode min = Q.extractMin();
+                //FibonacciNode min = Q.extractMin();
+                FibNode min=Q.extractMin();
                 if (min == null) {
                     Q.print();
                 }
                 int m = min.getKey().getNode();
                 System.out.println(String.format("Ya extraje el mínimo y me quedaron %d nodos", Q.getN()));
                 Q.print();
+                System.out.println("Printie el arbl despues de extraer");
                 for (int v = 0; v < graph[m].size(); v++) {
                     double nuevaDist = dist[m] + graph[m].get(v).getWeight();
                     if (nuevaDist < dist[graph[m].get(v).getNode()]) {

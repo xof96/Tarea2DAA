@@ -12,11 +12,12 @@ import java.util.ArrayList;
 public class FinalTest {
 
     public static void main(String args[]){
-        double[] tiemposarr=new double[100];
-        double[] tiempoheap=new double[100];
-        for (int veces=0;veces<100;veces++) {
+        int times=1;
+        double[] tiemposarr=new double[times];
+        double[] tiempoheap=new double[times];
+        for (int veces=0;veces<times;veces++) {
             Graph graph = new Graph();
-            ArrayList<GraphWay>[] mat = graph.generateGraph(10000, 100);//ajustar parametros para la ram de cada uno
+            ArrayList<GraphWay>[] mat = graph.generateGraph(10000, 10);//ajustar parametros para la ram de cada uno
             DijkArr dijkstra = new DijkArr();
             double ini = System.currentTimeMillis();
             Pair cdarray = dijkstra.makeDijsktra(mat);
@@ -42,11 +43,11 @@ public class FinalTest {
             }
             System.out.println();*/
         }
-        for (int j=0;j<100;j++){
+        for (int j=0;j<times;j++){
             System.out.print(tiemposarr[j]+" ");
         }
         System.out.println();
-        for (int j=0;j<100;j++){
+        for (int j=0;j<times;j++){
             System.out.print(tiempoheap[j]+" ");
         }
     }
